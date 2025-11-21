@@ -1,0 +1,33 @@
+#!/bin/sh
+
+echo "Running Flutter pre-push hooks..."
+
+# Check dependency updates
+echo "Checking for outdated dependencies..."
+flutter pub outdated
+if [ $? -ne 0 ]; then
+  echo "⚠️ Warning: Some dependencies might be outdated."
+fi
+
+# Run integration tests if they exist
+#if [ -d "integration_test" ]; then
+#  echo "Running integration tests..."
+#  flutter test integration_test
+#  if [ $? -ne 0 ]; then
+#    echo "❌ Integration tests failed. Please fix the failing tests."
+#    exit 1
+#  fi
+#fi
+
+# Build runner check (if using code generation)
+#if grep -q "build_runner" pubspec.yaml; then
+#  echo "Checking generated code..."
+#  flutter pub run build_runner build --delete-conflicting-outputs
+#  if [ $? -ne 0 ]; then
+#    echo "❌ Code generation failed. Please fix the issues above."
+#    exit 1
+#  fi
+#fi
+
+echo "✅ All pre-push checks passed!"
+exit 0

@@ -1,0 +1,26 @@
+# dart run flutter_launcher_icons
+
+flutter_launcher_icons:
+  # Recommended: 1024x1024 px size, PNG format, Full square, no rounding
+  image_path: "assets/config/launcher_icons/app_logo_icon.png"
+
+  android: "ic_launcher"
+  # image_path_android: "assets/icon/icon.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+
+  # OPTIONAL: you can also add adaptive icons if you want to, but it is ENTIRELY optional.
+
+  # Recommended: 432x432 px size, PNG format or HEX color code (e.g "#ffffff"),
+  adaptive_icon_background: "assets/config/launcher_icons/background.png"
+
+  # Recommended: 432x432 px size, PNG format
+  adaptive_icon_foreground: "assets/config/launcher_icons/foreground.png"
+
+  #  adaptive_icon_monochrome: "assets/config/launcher_icons/foreground.png"
+
+  ios: true
+  # image_path_ios: "assets/icon/icon.png"
+  remove_alpha_ios: true
+  # image_path_ios_dark_transparent: "assets/icon/icon_dark.png"
+  # image_path_ios_tinted_grayscale: "assets/icon/icon_tinted.png"
+  # desaturate_tinted_to_grayscale_ios: true

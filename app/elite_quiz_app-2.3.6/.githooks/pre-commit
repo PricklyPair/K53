@@ -1,0 +1,31 @@
+#!/bin/sh
+
+echo "Running pre-commit hooks..."
+
+# Format Dart code
+echo "Running dart format..."
+dart format --set-exit-if-changed -o none .
+if [ $? -ne 0 ]; then
+  echo "❌ Dart format check failed. Please format your code with 'dart format .'"
+  exit 1
+fi
+
+# Run Flutter analyzer
+#echo "Running Flutter analyze..."
+#flutter analyze
+#if [ $? -ne 0 ]; then
+#  echo "❌ Flutter analyze failed. Please fix the issues above."
+#  exit 1
+#fi
+
+# Check for large files
+#echo "Checking for large files..."
+#large_files=$(find . -type f -size +5M ! -path "./.git/*" ! -path "./build/*" ! -path "./.dart_tool/*" ! -path "./android/.gradle/*" ! -path "./ios/Pods/*" -exec ls -lh {} \;)
+#if [ -n "$large_files" ]; then
+#  echo "⚠️ Warning: Large files detected:"
+#  echo "$large_files"
+#  exit 1
+#fi
+
+echo "✅ All pre-commit checks passed!"
+exit 0

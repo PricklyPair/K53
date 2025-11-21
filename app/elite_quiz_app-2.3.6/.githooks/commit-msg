@@ -1,0 +1,51 @@
+#!/bin/sh
+
+# Get the commit message from the temporary file created by git
+commit_msg_file="$1"
+commit_msg=$(cat "$commit_msg_file")
+
+# Print usage information for a given type
+print_type_info() {
+    case "$1" in
+        "feat")     echo "feat     New feature or functionality addition";;
+        "fix")      echo "fix      Bug fixes or error corrections";;
+        "docs")     echo "docs     Documentation changes only";;
+        "style")    echo "style    Code style changes (formatting, missing semicolons, etc)";;
+        "refactor") echo "refactor Code changes that neither fix bugs nor add features";;
+        "perf")     echo "perf     Performance improvements";;
+        "test")     echo "test     Adding or modifying tests";;
+        "chore")    echo "chore    Build process, auxiliary tool changes, or other maintenance";;
+        "ci")       echo "ci       CI/CD related changes";;
+        "revert")   echo "revert   Reverting a previous commit";;
+    esac
+}
+
+# Validate commit message using grep
+# We split the pattern into parts for better readability
+type_pattern="^(feat|fix|docs|style|refactor|perf|test|chore|ci|revert)"
+scope_pattern="(\([a-z0-9-]+\))?"
+description_pattern=": .+"
+commit_pattern="$type_pattern$scope_pattern$description_pattern"
+
+if ! echo "$commit_msg" | grep -qE "$commit_pattern"; then
+    echo "Error: Invalid commit message format."
+    echo "Please use the semantic commit format: type: description"
+    echo "Or with optional scope: type(scope): description"
+    echo
+    echo "Available types and their usage:"
+    echo "--------------------------------"
+    for type in feat fix docs style refactor perf test chore ci revert; do
+        print_type_info "$type"
+    done
+    echo
+    echo "Examples:"
+    echo "  feat: add user authentication"
+    echo "  feat(auth): add OAuth2 authentication"
+    echo "  fix: handle null API responses"
+    echo "  fix(api): handle null response from endpoint"
+    echo "  docs: update README"
+    echo "  style: format according to styleguide"
+    exit 1
+fi
+
+exit 0
