@@ -38,7 +38,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace "com.wrteam.flutterquiz"
+    namespace "za.co.k53learner"
     compileSdkVersion 36
 
     compileOptions {
@@ -57,7 +57,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.wrteam.flutterquiz"
+        applicationId "za.co.k53learner"
         minSdkVersion flutter.minSdkVersion
         targetSdkVersion 36
         ndkVersion "29.0.14033849"
