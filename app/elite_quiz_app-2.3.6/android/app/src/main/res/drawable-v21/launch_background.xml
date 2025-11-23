@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Modify this file to customize your launch splash screen -->
+<!-- K53 Learning Platform Splash Screen -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="?android:colorBackground" />
+    <!-- K53 Road Sign Blue Background -->
+    <item android:drawable="@color/k53_splash_background" />
 
     <!-- You can insert your own image assets here -->
     <!-- <item>
