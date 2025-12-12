@@ -51,9 +51,15 @@ class _SplashScreenState extends State<SplashScreen>
           .then((_) async {
             await _fetchSystemConfig();
           })
-          .catchError((Object? e) {
+          .catchError((Object? e, StackTrace? stackTrace) {
+            log(
+              'Error during language initialization',
+              name: 'SplashScreen',
+              error: e,
+              stackTrace: stackTrace,
+            );
             setState(() {
-              languageError = e.toString();
+              languageError = 'Language Init Error: ${e.toString()}';
             });
           });
     });
@@ -67,7 +73,19 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   Future<void> _initLanguage() async {
-    await context.read<AppLocalizationCubit>().init();
+    try {
+      log('Initializing app localization...', name: 'SplashScreen');
+      await context.read<AppLocalizationCubit>().init();
+      log('App localization initialized', name: 'SplashScreen');
+    } catch (e, stackTrace) {
+      log(
+        'Error in _initLanguage',
+        name: 'SplashScreen',
+        error: e,
+        stackTrace: stackTrace,
+      );
+      rethrow;
+    }
   }
 
   void _initAnimations() {
@@ -107,9 +125,27 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   Future<void> _fetchSystemConfig() async {
-    await context.read<SystemConfigCubit>().getSystemConfig();
-    await GdprHelper.initialize();
-    await AppTrackingTransparencyHelper.requestTrackingPermission();
+    try {
+      log('Fetching system config...', name: 'SplashScreen');
+      await context.read<SystemConfigCubit>().getSystemConfig();
+      log('System config fetched successfully', name: 'SplashScreen');
+
+      log('Initializing GDPR helper...', name: 'SplashScreen');
+      await GdprHelper.initialize();
+      log('GDPR helper initialized', name: 'SplashScreen');
+
+      log('Requesting tracking permission...', name: 'SplashScreen');
+      await AppTrackingTransparencyHelper.requestTrackingPermission();
+      log('Tracking permission handled', name: 'SplashScreen');
+    } catch (e, stackTrace) {
+      log(
+        'Error in _fetchSystemConfig',
+        name: 'SplashScreen',
+        error: e,
+        stackTrace: stackTrace,
+      );
+      rethrow;
+    }
   }
 
   Future<void> _initIronSource() async {
@@ -236,15 +272,24 @@ class _SplashScreenState extends State<SplashScreen>
                 child: ErrorContainer(
                   showBackButton: true,
                   errorMessageColor: Theme.of(context).colorScheme.onTertiary,
-                  errorMessage: convertErrorCodeToLanguageKey(languageError),
+                  // Show the full error message instead of converting to language key
+                  errorMessage: languageError,
                   onTapRetry: () {
                     _initLanguage()
                         .then((_) {
                           languageError = '';
                           _fetchSystemConfig();
                         })
-                        .catchError((Object? e) {
-                          languageError = e.toString();
+                        .catchError((Object? e, StackTrace? stackTrace) {
+                          log(
+                            'Error during language initialization retry',
+                            name: 'SplashScreen',
+                            error: e,
+                            stackTrace: stackTrace,
+                          );
+                          setState(() {
+                            languageError = 'Language Init Error: ${e.toString()}';
+                          });
                         });
                     setState(_initAnimations);
                   },
@@ -256,6 +301,13 @@ class _SplashScreenState extends State<SplashScreen>
         }
 
         if (state is SystemConfigFetchFailure) {
+          // Log the error for debugging
+          log(
+            'System config fetch failed',
+            name: 'SplashScreen',
+            error: 'Error Code: ${state.errorCode}',
+          );
+
           return AnnotatedRegion<SystemUiOverlayStyle>(
             value: systemUiOverlayStyle.copyWith(
               systemNavigationBarColor: context.scaffoldBackgroundColor,
@@ -267,7 +319,8 @@ class _SplashScreenState extends State<SplashScreen>
                 child: ErrorContainer(
                   showBackButton: true,
                   errorMessageColor: context.colorScheme.onTertiary,
-                  errorMessage: convertErrorCodeToLanguageKey(state.errorCode),
+                  // Show detailed error with code
+                  errorMessage: 'System Config Error\nCode: ${state.errorCode}\nMessage: ${convertErrorCodeToLanguageKey(state.errorCode)}',
                   onTapRetry: () {
                     setState(_initAnimations);
                     _fetchSystemConfig();

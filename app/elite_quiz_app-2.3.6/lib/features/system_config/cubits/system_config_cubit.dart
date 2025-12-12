@@ -66,7 +66,10 @@ class SystemConfigCubit extends Cubit<SystemConfigState> {
         ),
       );
     } on Exception catch (e) {
-      emit(SystemConfigFetchFailure(e.toString()));
+      // DEBUG: Show actual error instead of generic message
+      final errorMsg = e.toString();
+      print('🔴 SystemConfig Error: $errorMsg');
+      emit(SystemConfigFetchFailure(errorMsg));
     }
   }
 

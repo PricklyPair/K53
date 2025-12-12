@@ -5,13 +5,13 @@ import 'package:google_fonts/google_fonts.dart';
 export 'colors.dart';
 
 /// === Config ===
-const appName = 'K53 Learning Platform';
+const appName = 'K53 Learner License Quiz';
 const packageName = 'za.co.k53learner';
 
 /// Add your panel url here
 // NOTE: make sure to not add '/' at the end of url
 // NOTE: make sure to check if admin panel is http or https
-const panelUrl = 'https://k53learner.co.za';
+const panelUrl = 'http://192.241.154.47';
 
 /// === Branding ===
 ///

@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterquiz/core/localization/localization_extensions.dart';
 import 'package:flutterquiz/features/k53/models/learning_section.dart';
 import 'package:flutterquiz/ui/widgets/custom_appbar.dart';
 import 'package:flutterquiz/ui/widgets/k53/section_card.dart';
-import 'package:flutterquiz/utils/extensions.dart';
 
 class LearningPathScreen extends StatefulWidget {
   const LearningPathScreen({super.key});

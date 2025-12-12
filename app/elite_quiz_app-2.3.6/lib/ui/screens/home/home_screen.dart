@@ -1287,9 +1287,8 @@ class HomeScreenState extends State<HomeScreen>
                   return Center(
                     child: ErrorContainer(
                       showBackButton: true,
-                      errorMessage: convertErrorCodeToLanguageKey(
-                        state.errorMessage,
-                      ),
+                      // DEBUG: Show actual error message
+                      errorMessage: 'ERROR: ${state.errorMessage}',
                       onTapRetry: fetchUserDetails,
                       showErrorImage: true,
                     ),

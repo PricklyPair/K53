@@ -19,7 +19,7 @@
 
 
     <application
-        android:label="Elite Quiz"
+        android:label="K53 Learner License Quiz"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true"
         android:allowBackup="false"
