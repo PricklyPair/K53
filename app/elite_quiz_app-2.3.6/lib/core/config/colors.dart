@@ -10,7 +10,7 @@ const k53SuccessGreen = Color(0xff008450);
 const klBackgroundColor = Color(0xffffffff);
 const klCanvasColor = Color(0xcc000000);
 const klPageBackgroundColor = Color(0xfff3f7fa);
-const klPrimaryColor = k53RoadSignBlue;
+const Color klPrimaryColor = k53RoadSignBlue;
 const klPrimaryTextColor = Color(0xff0a1f3d);
 
 /// Dark Theme

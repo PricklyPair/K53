@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -37,34 +39,72 @@ import 'package:flutterquiz/features/system_config/system_config_repository.dart
 import 'package:hive_flutter/hive_flutter.dart';
 
 Future<Widget> initializeApp() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  try {
+    log('Initializing WidgetsFlutterBinding...', name: 'App Init');
+    WidgetsFlutterBinding.ensureInitialized();
+    log('WidgetsFlutterBinding initialized', name: 'App Init');
 
-  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(
-      statusBarBrightness: Brightness.light,
-      statusBarIconBrightness: Brightness.light,
-    ).copyWith(
-      statusBarColor: Colors.transparent,
-      systemNavigationBarColor: Colors.transparent,
-      systemNavigationBarDividerColor: Colors.transparent,
-      systemNavigationBarIconBrightness: Brightness.dark,
-    ),
-  );
+    log('Setting preferred orientations...', name: 'App Init');
+    await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    log('Orientation set to portrait', name: 'App Init');
 
-  await Firebase.initializeApp();
-  FirebaseFirestore.instance.settings = const Settings(
-    persistenceEnabled: false,
-  );
+    log('Setting SystemUIOverlayStyle...', name: 'App Init');
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        statusBarBrightness: Brightness.light,
+        statusBarIconBrightness: Brightness.light,
+      ).copyWith(
+        statusBarColor: Colors.transparent,
+        systemNavigationBarColor: Colors.transparent,
+        systemNavigationBarDividerColor: Colors.transparent,
+        systemNavigationBarIconBrightness: Brightness.dark,
+      ),
+    );
+    log('SystemUIOverlayStyle configured', name: 'App Init');
 
-  // Local phone storage
-  await Hive.initFlutter();
-  await Hive.openBox<dynamic>(authBox);
-  await Hive.openBox<dynamic>(settingsBox);
-  await Hive.openBox<dynamic>(userDetailsBox);
-  await Hive.openBox<dynamic>(examBox);
+    log('Initializing Firebase...', name: 'App Init');
+    await Firebase.initializeApp();
+    log('Firebase initialized successfully', name: 'App Init');
 
-  return const MyApp();
+    log('Configuring Firestore settings...', name: 'App Init');
+    FirebaseFirestore.instance.settings = const Settings(
+      persistenceEnabled: false,
+    );
+    log('Firestore settings configured', name: 'App Init');
+
+    // Local phone storage
+    log('Initializing Hive...', name: 'App Init');
+    await Hive.initFlutter();
+    log('Hive initialized', name: 'App Init');
+
+    log('Opening authBox...', name: 'App Init');
+    await Hive.openBox<dynamic>(authBox);
+    log('authBox opened', name: 'App Init');
+
+    log('Opening settingsBox...', name: 'App Init');
+    await Hive.openBox<dynamic>(settingsBox);
+    log('settingsBox opened', name: 'App Init');
+
+    log('Opening userDetailsBox...', name: 'App Init');
+    await Hive.openBox<dynamic>(userDetailsBox);
+    log('userDetailsBox opened', name: 'App Init');
+
+    log('Opening examBox...', name: 'App Init');
+    await Hive.openBox<dynamic>(examBox);
+    log('examBox opened', name: 'App Init');
+
+    log('All Hive boxes opened successfully', name: 'App Init');
+
+    return const MyApp();
+  } catch (e, stackTrace) {
+    log(
+      'Error during app initialization',
+      name: 'App Init',
+      error: e,
+      stackTrace: stackTrace,
+    );
+    rethrow; // Re-throw to be caught by main()
+  }
 }
 
 class MyApp extends StatelessWidget {

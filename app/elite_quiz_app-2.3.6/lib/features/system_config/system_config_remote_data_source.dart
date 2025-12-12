@@ -18,12 +18,14 @@ class SystemConfigRemoteDataSource {
         );
       }
       return responseJson['data'] as Map<String, dynamic>;
-    } on SocketException {
-      throw SystemConfigException(errorMessageCode: errorCodeNoInternet);
+    } on SocketException catch (e) {
+      // DEBUG: Show actual network error
+      throw SystemConfigException(errorMessageCode: 'Network Error: ${e.message}');
     } on SystemConfigException catch (e) {
       throw SystemConfigException(errorMessageCode: e.toString());
-    } on Exception catch (_) {
-      throw SystemConfigException(errorMessageCode: errorCodeDefaultMessage);
+    } on Exception catch (e) {
+      // DEBUG: Show actual error instead of generic message
+      throw SystemConfigException(errorMessageCode: 'Exception: ${e.toString()}');
     }
   }
 
@@ -41,12 +43,14 @@ class SystemConfigRemoteDataSource {
         );
       }
       return (responseJson['data'] as List).cast<Map<String, dynamic>>();
-    } on SocketException catch (_) {
-      throw SystemConfigException(errorMessageCode: errorCodeNoInternet);
+    } on SocketException catch (e) {
+      // DEBUG: Show actual network error
+      throw SystemConfigException(errorMessageCode: 'Network Error: ${e.message}');
     } on SystemConfigException catch (e) {
       throw SystemConfigException(errorMessageCode: e.toString());
-    } on Exception catch (_) {
-      throw SystemConfigException(errorMessageCode: errorCodeDefaultMessage);
+    } on Exception catch (e) {
+      // DEBUG: Show actual error
+      throw SystemConfigException(errorMessageCode: 'Exception: ${e.toString()}');
     }
   }
 

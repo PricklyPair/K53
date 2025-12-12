@@ -7,7 +7,6 @@ import 'package:flutterquiz/core/constants/constants.dart';
 import 'package:flutterquiz/features/in_app_purchase/in_app_purchase_repo.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 //
-// ignore: depend_on_referenced_packages
 import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 
 abstract class InAppPurchaseState {}

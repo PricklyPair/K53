@@ -45,4 +45,4 @@ List<String> payoutRequestNotes(
   return payoutRequestNote(payoutRequestCurrency, amount, coins);
 }
 
-final List<PayoutMethod> kPayoutMethods = payoutMethods;
+const List<PayoutMethod> kPayoutMethods = payoutMethods;
