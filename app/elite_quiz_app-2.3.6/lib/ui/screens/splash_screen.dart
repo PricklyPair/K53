@@ -59,7 +59,7 @@ class _SplashScreenState extends State<SplashScreen>
               stackTrace: stackTrace,
             );
             setState(() {
-              languageError = 'Language Init Error: ${e.toString()}';
+              languageError = 'Language Init Error: $e';
             });
           });
     });
@@ -288,7 +288,7 @@ class _SplashScreenState extends State<SplashScreen>
                             stackTrace: stackTrace,
                           );
                           setState(() {
-                            languageError = 'Language Init Error: ${e.toString()}';
+                            languageError = 'Language Init Error: $e';
                           });
                         });
                     setState(_initAnimations);
